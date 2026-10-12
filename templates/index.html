@@ -1,0 +1,44 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+<title>O site</title>
+</head>
+<body>
+<h1>Olá, {{ usuario }}!</h1>
+
+<h3>Sua lista de tarefas:</h3>
+<ul>
+    {% for item in tarefas %}
+        <li>{{ item }}</li>
+    {% endfor %}
+</ul>
+<hr>
+<form action="/enviar" method="post">
+    <input type="text" name="nova_tarefa" placeholder="Nova tarefa" required>
+    <button type="submit">Adicionar</button>
+</form>
+
+<form action="/calcular" method="post">
+    <label for="numero1">numero1:</label>
+    <input type="number" step="any" id="numero1" name="numero1" required>
+
+<label for="operacao">operacao</label>
+    <select id="operacao" name="operacao" required>
+        <option value="soma">somar +</option>
+        <option value="subtracao">subtracao -</option>
+        <option value="multiplicacao">multiplicacao *</option>
+        <option value="divisao">divisao /</option>
+    </select>
+
+
+    <label for="numero2">numero2:</label>
+    <input type="number" step="any" id="numero2" name="numero2" required>
+    <button type="submit">Calcular</button>
+</form>
+
+{% if solver is not none %}
+<h3>resultado: {{ solver }}</h3>
+{% endif %}
+
+</body>
+</html>
