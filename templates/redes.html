@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='file.css') }}">
+        <title>Curso Redes</title>
+    </head>
+    <body>
+        <h1>Redes de Computadores</h1>
+        <p>Os protocolos que eu vi.</p>
+
+        <h5>Meus cartões</h5>
+
+    <form action="/cartao" method="post">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" placeholder="Digite o título" required><br>
+
+        <label for="texto">Texto:</label>
+        <textarea id="texto" name="texto" placeholder="Escreva o texto" required></textarea>
+        <button type="submit">cartão</button>
+    </form>
+
+    <hr>
+
+    <h4>Cartões</h4>
+    {% if listagem %}
+    <div class="mural">
+        {% for carta in listagem %}
+        <div class="cartao">
+            <h3>{{ carta.titulo }}</h3>
+            <p>{{ carta.texto }}</p>
+            <small>Criado em {{ carta.data }}</small>
+            <form action="/excluir/{{ carta.id }}" method="post" onsubmit="return canfirm('Deseja excluir este cartão');">
+
+                <button type="submit" style="color: red">Excluir cartão</button>
+            </form>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p>Você ainda não criou nenhum cartão</p>
+        {% endif %}
+    </div>
+
+    <a href="{{ url_for('home') }}">Volta</a>
+    </body>
+</html>

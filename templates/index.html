@@ -1,46 +1,73 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>O site</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<h1>Olá, {{ usuario }}!</h1>
 
+    # Nome do usuario
+<h1>Olá, {{ usuario if usuario.strip() else "Visitante" }}!</h1>
+
+    # definir o nome
+<form action="/salvar_nome" method="post">
+<input type="text" name="seu_nome" placeholder="Nomeado" required>
+<button type="submit">Nomear</button>
+</form>
+
+    <hr>
+    # lista de tarefas
 <h3>Sua lista de tarefas:</h3>
 <ul>
     {% for item in tarefas %}
         <li>{{ item }}</li>
     {% endfor %}
 </ul>
-<hr>
-<form action="/enviar" method="post">
-    <input type="text" name="nova_tarefa" placeholder="Nova tarefa" required>
-    <button type="submit">Adicionar</button>
-</form>
 
-<num1>
-<form action="/calcular" method="post">
-    <label for="numero1">numero1:</label>
-    <input type="number" step="any" id="numero1" name="numero1" required>
-</num1>
+    # adicionar tarefas
+<form action="/enviar" method="POST">
+        <input type="text" name="nova_tarefa" placeholder="Nova tarefa" required>
+        <button type="submit">Adicionar</button>
+    </form>
 
-<label for="operacao">operacao</label>
-    <select id="operacao" name="operacao" required>
-        <option value="soma">somar +</option>
-        <option value="subtracao">subtracao -</option>
-        <option value="multiplicacao">multiplicacao *</option>
-        <option value="divisao">divisao /</option>
-    </select>
+    <hr>
 
+    # Calculadora
+    <form action="/calcular" method="post">
+        <div class="input-group">
+            <label for="numero1">Número 1:</label>
+            <input type="number" step="any" id="numero1" name="numero1" required>
+        </div>
 
-    <label for="numero2">numero2:</label>
-    <input type="number" step="any" id="numero2" name="numero2" required>
-    <button type="submit">Calcular</button>
-</form>
+        <div class="input-group">
+            <label for="operacao">Operação:</label>
+            <select id="operacao" name="operacao" required>
+                <option value="soma">somar +</option>
+                <option value="subtracao">subtracao -</option>
+                <option value="multiplicacao">multiplicacao *</option>
+                <option value="divisao">divisao /</option>
+            </select>
+        </div>
+            
+        <div class="input-group">
+            <label for="numero2">Número 2:</label>
+            <input type="number" step="any" id="numero2" name="numero2" required>
+        </div>
 
-{% if solver is not none %}
-<h3>resultado: {{ solver }}</h3>
-{% endif %}
+        <button type="submit">Calcular</button>
+    </form>
 
+    {% if solver is not none %}
+        <h3>Resultado: {{ solver }}</h3>
+    {% endif %}
+
+    <h3>Lista das páginas que fiz:</h3>
+    <ul>
+        <li><a href="/templates/redes.html">Pagina de redes</a></li>
+    </ul>
+    <li>
+        <a href="{{ url_for('redes') }}">Pagina</a>
+    </li>
 </body>
 </html>
